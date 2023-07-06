@@ -1,0 +1,1 @@
+{"name":"Local: string","url":"d:\\competitive programming\\string.cpp","tests":[{"id":1679150368538,"input":"2\n33113\n73777\n77537\n51773","output":""},{"id":1679150393097,"input":"","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\competitive programming\\string.cpp","group":"local","local":true}

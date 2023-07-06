@@ -1,0 +1,1 @@
+{"name":"Local: operation_on_a_bs","url":"d:\\competitive programming\\operation_on_a_bs.cpp","tests":[{"id":1678896969896,"input":"2\n5 3\n11011\n4 4\n0011","output":""},{"id":1678898336834,"input":"1\n9 10\n110001100","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\competitive programming\\operation_on_a_bs.cpp","group":"local","local":true}

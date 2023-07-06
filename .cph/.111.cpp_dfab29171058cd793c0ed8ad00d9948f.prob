@@ -1,0 +1,1 @@
+{"name":"Local: 111","url":"d:\\competitive programming\\111.cpp","tests":[{"id":1677681215263,"input":"3\n1 10\n2 2\n4 2","output":"11\n5\n46\n42"},{"id":1677681750692,"input":"1\n3 2","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"d:\\competitive programming\\111.cpp","group":"local","local":true}

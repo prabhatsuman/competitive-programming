@@ -1,0 +1,28 @@
+#include<bits/stdc++.h>
+#define ll long long
+#define mod 1000000007
+#define nline '\n'
+using namespace std;
+void solve()
+{
+    string s;
+    cin>>s;
+    int x;
+    cin>>x;
+    while(x--)
+    {
+        cout<<s<<nline;
+    }
+}
+int main()
+{
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+    ll t=1;
+  
+    while(t--)
+    {
+       solve();
+    }
+    return 0;
+}
