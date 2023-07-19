@@ -56,28 +56,43 @@ void solve()
     cin >> n >> m;
     int count = 0;
     queue<int> q;
+    unordered_map<int, bool> mp;
     q.push(n);
+ 
     while (!q.empty())
     {
         int size = q.size();
+     
+        
         while (size--)
         {
+
             int x = q.front();
             q.pop();
+            // cout<<x<<" ";
             if (x == m)
             {
                 cout << count << nline;
                 return;
             }
-            if (x < 2*m)
+            if(!mp[x*2])
             {
+                mp[x*2]=true;
                 q.push(x * 2);
             }
-            if (x - 1 > 0)
+                
+          
+            if (x - 1 > 0 && !mp[x-1])
+            {
+                mp[x-1]=true;
                 q.push(x - 1);
+            }
+           
         }
          count++;
+        
     }
+    // cout << count << nline;
    
 }
 

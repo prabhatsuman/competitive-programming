@@ -18,7 +18,9 @@ typedef vector<pi> vpi;
 typedef vector<pl> vpl;
 typedef vector<vi> vvi;
 typedef vector<vl> vvl;
-#define read(v) for(auto &x:v) cin>>x;
+#define read(v)       \
+    for (auto &x : v) \
+        cin >> x;
 #define printv(v)                      \
     for (int i = 0; i < v.size(); i++) \
         cout << v[i] << " ";
@@ -50,32 +52,32 @@ typedef vector<vl> vvl;
 /* -----------------------------Code Begins from here-------------------------------------------*/
 void solve()
 {
-    ll n,m,h;
-    cin>>n>>m>>h;
-    priority_queue<ll,vector<ll>,greater<ll>> pq[n];
-    for(ll i=0;i<n;i++)
+    int n, m, h;
+    cin >> n >> m >> h;
+    priority_queue<int, vector<int>, greater<int>> pq[n];
+    for (int i = 0; i < n; i++)
     {
-        for(ll j=0;j<m;j++)
+        for (int j = 0; j < m; j++)
         {
-            ll x;
-            cin>>x;
+            int x;
+            cin >> x;
             pq[i].push(x);
         }
     }
-    vector<pair<pair<ll,ll>,ll>> v;
-    for(ll i=0;i<n;i++)
+    vector<pair<pair<ll, ll>, ll>> v;
+    for (ll i = 0; i < n; i++)
     {
-        ll polls=0, hours=0;
-        ll penatly=0;
-        while(!pq[i].empty())
+        ll polls = 0, hours = 0;
+        ll penatly = 0;
+        while (!pq[i].empty())
         {
-            ll x=pq[i].top();
+            ll x = pq[i].top();
             pq[i].pop();
-            if(hours+x<=h)
+            if (hours + x <= h)
             {
-                penatly+=hours+x;
-                hours+=x;
-                
+                penatly += hours + x;
+                hours += x;
+
                 polls++;
             }
             else
@@ -84,30 +86,30 @@ void solve()
             }
         }
         // cout<<i<<" "<<polls<<" "<<hours<<nline;
-        v.pb({{polls,penatly},i});
+        v.pb({{polls, penatly}, i});
     }
-    sort(all(v),[](pair<pair<ll,ll>,ll> a,pair<pair<ll,ll>,ll> b){
+    sort(all(v), [](pair<pair<ll, ll>, ll> a, pair<pair<ll, ll>, ll> b)
+         {
         if(a.first.first==b.first.first)
         {
+            if(a.first.second==b.first.second)
+            {
+                return a.second<b.second;
+            }
             return a.first.second<b.first.second;
         }
-        return a.first.first>b.first.first;
-    });
-    // for(auto x:v)
-    // {
-    //     cout<<x.first.first<<" "<<x.first.second<<" " <<x.second<<nline;
-    // }
-    ll temp=0;
-    for(ll i=0;i<n;i++)
+        return a.first.first>b.first.first; });
+
+    int temp = 0;
+    for (ll i = 0; i < n; i++)
     {
-        if(v[i].second==0)
+        if (v[i].second == 0)
         {
             break;
         }
         temp++;
     }
-    cout<<temp+1<<nline;
-
+    cout << temp + 1 << nline;
 }
 
 int main()

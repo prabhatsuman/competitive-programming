@@ -18,7 +18,9 @@ typedef vector<pi> vpi;
 typedef vector<pl> vpl;
 typedef vector<vi> vvi;
 typedef vector<vl> vvl;
-#define read(v) for(auto &x:v) cin>>x;
+#define read(v)       \
+    for (auto &x : v) \
+        cin >> x;
 #define printv(v)                      \
     for (int i = 0; i < v.size(); i++) \
         cout << v[i] << " ";
@@ -48,27 +50,47 @@ typedef vector<vl> vvl;
     cin.tie(NULL);
 
 /* -----------------------------Code Begins from here-------------------------------------------*/
+
 void solve()
 {
-   ll n;
-    cin>>n;
-    
-        int f=0;
-        for(int i=2;i*i+1<=n;i++){
-            ll x=i*i+1+i;
-            ll j=3;
-            while(x<n){
-                x=x+pow(i,j);
-                j++;
+    ll n;
+    cin >> n;
+
+    for (ll i = 2; i < 64; i++)
+    {
+        ll low = 2, high = 1e9;
+        while (low <= high)
+        {
+            ll mid = high - (high - low) / 2;
+            __int128_t val = 0;
+            __int128_t p = 1;
+            for (ll j = 0; j <= i; j++)
+            {
+                val += p;
+                p *= mid;
+
+                if (val > n)
+                {
+                    break;
+                }
             }
-            if(x==n){
-                f=1;
-                break;
+            // cout<<i<<" "<<mid<<" "<<val<<nline;
+            if (val == n)
+            {
+                yes;
+                return;
+            }
+            if (val < n)
+            {
+                low = mid + 1;
+            }
+            else
+            {
+                high = mid - 1;
             }
         }
-        if(f) cout<<"YES"<<endl;
-        else cout<<"NO"<<endl;
-   
+    }
+    no;
 }
 
 int main()
