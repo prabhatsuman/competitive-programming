@@ -18,9 +18,7 @@ typedef vector<pi> vpi;
 typedef vector<pl> vpl;
 typedef vector<vi> vvi;
 typedef vector<vl> vvl;
-#define read(v)       \
-    for (auto &x : v) \
-        cin >> x;
+#define read(v) for(auto &x:v) cin>>x;
 #define printv(v)                      \
     for (int i = 0; i < v.size(); i++) \
         cout << v[i] << " ";
@@ -50,78 +48,63 @@ typedef vector<vl> vvl;
     cin.tie(NULL);
 
 /* -----------------------------Code Begins from here-------------------------------------------*/
-int helper(int i,int j,int k,int n)
+map<int,int> m;
+class SparseTable
 {
-    vector<int> fib;
-    fib.push_back(i);
-    fib.push_back(j);
-    int count=2;
-    while(fib.back()<=k)
+    public:
+    int n;
+    vector<vector<int>> table;
+    SparseTable(int n,vector<int> v)
     {
-        fib.push_back(fib[count-1]+fib[count-2]);
-        count++;
+        this->n=n;
+        table.resize(log2(n)+1,vector<int>(n));
+        build(v);
     }
-    if(fib.back()==n)
+    void build(vector<int> v)
     {
-        return 1;
+        for(int i=0;i<n;i++)
+        {
+            table[0][i]=v[i];
+            m[v[i]]++;
+        }
+        for(int i=1;i<log2(n)+1;i++)
+        {
+            for(int j=0;j+(1<<i)<=n;j++)
+            {
+                table[i][j]=__gcd(table[i-1][j],table[i-1][j+(1<<(i-1))]);
+                m[table[i][j]]++;
+            }
+        }
     }
-    else if(fib.back()<n)
+    int  query(int l,int r)
     {
-        return 0;
+        int j=log2(r-l+1);
+        int minimum=min(table[j][l],table[j][r-(1<<j)+1]);
+        return minimum;
     }
-    else
-    {
-        return 2;
-    }
-}
+};
 void solve()
 {
-    int n,k;
-    cin>>n>>k;
-  
-    if(k>=30)
+    int n;
+    cin>>n;
+    vi v(n);
+    read(v);
+    SparseTable st(n,v);
+    int q;
+    cin>>q;
+    while(q--)
     {
-        cout<<0<<nline;
-        return ;
-
+        int x;
+        cin>>x;
+        cout<<m[x]<<nline;
     }
-    int ans=0;
-    for(int i=0;i<2e5;i++)
-    {
-        int lo=i+1,hi=2e5;
-        while(lo<=hi)
-        {
-            int mid=hi-(hi-lo)/2;
-            if(helper(i,mid,k,n)==1)
-            {
-                ans++;
-                break;
-            }
-            else if(helper(i,mid,k,n)==0)
-            {
-                lo=mid+1;
-            }
-            else
-            {
-                hi=mid-1;
-            }
-
-        }
-
-
-    }
-    cout<<ans<<nline;
-
-
 
 }
 
 int main()
 {
     godspeed;
-    ll t;
-    cin >> t;
-   
+    ll t=1;
 
     while (t--)
     {

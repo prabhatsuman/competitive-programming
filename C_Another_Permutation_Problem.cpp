@@ -50,70 +50,43 @@ typedef vector<vl> vvl;
     cin.tie(NULL);
 
 /* -----------------------------Code Begins from here-------------------------------------------*/
-int helper(int i,int j,int k,int n)
-{
-    vector<int> fib;
-    fib.push_back(i);
-    fib.push_back(j);
-    int count=2;
-    while(fib.back()<=k)
-    {
-        fib.push_back(fib[count-1]+fib[count-2]);
-        count++;
-    }
-    if(fib.back()==n)
-    {
-        return 1;
-    }
-    else if(fib.back()<n)
-    {
-        return 0;
-    }
-    else
-    {
-        return 2;
-    }
-}
 void solve()
 {
-    int n,k;
-    cin>>n>>k;
-  
-    if(k>=30)
+    int n;
+    cin >> n;
+    vector<int> pre(n, 0);
+    for (int i = 0; i < n; i++)
     {
-        cout<<0<<nline;
-        return ;
-
+        pre[i] = i + 1;
+    }
+    if(n==2)
+    {
+        cout<<2<<nline;
+        return;
     }
     int ans=0;
-    for(int i=0;i<2e5;i++)
+    for(int i=0;i<n;i++)
     {
-        int lo=i+1,hi=2e5;
-        while(lo<=hi)
+        int sum=0;
+        int ma=0;
+        for(int k=0;k<=i;k++)
         {
-            int mid=hi-(hi-lo)/2;
-            if(helper(i,mid,k,n)==1)
-            {
-                ans++;
-                break;
-            }
-            else if(helper(i,mid,k,n)==0)
-            {
-                lo=mid+1;
-            }
-            else
-            {
-                hi=mid-1;
-            }
-
+            // cout<<pre[k]<<" ";
+            sum+=pre[k]*(k+1);
+            ma=max(ma,pre[k]*(k+1));
         }
-
-
+        int j=i+1;
+        for(int k=n-1;k>i;k--)
+        {
+            // cout<<pre[k]<<" ";
+            sum+=pre[k]*(j+1);
+            ma=max(ma,pre[k]*(j+1));
+            j++;
+        }
+        // cout<<sum-ma<<endl;
+        ans=max(ans,sum-ma);
     }
-    cout<<ans<<nline;
-
-
-
+    cout << ans << nline;
 }
 
 int main()
@@ -121,7 +94,6 @@ int main()
     godspeed;
     ll t;
     cin >> t;
-   
 
     while (t--)
     {

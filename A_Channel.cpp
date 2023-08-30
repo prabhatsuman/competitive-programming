@@ -18,9 +18,7 @@ typedef vector<pi> vpi;
 typedef vector<pl> vpl;
 typedef vector<vi> vvi;
 typedef vector<vl> vvl;
-#define read(v)       \
-    for (auto &x : v) \
-        cin >> x;
+#define read(v) for(auto &x:v) cin>>x;
 #define printv(v)                      \
     for (int i = 0; i < v.size(); i++) \
         cout << v[i] << " ";
@@ -50,69 +48,56 @@ typedef vector<vl> vvl;
     cin.tie(NULL);
 
 /* -----------------------------Code Begins from here-------------------------------------------*/
-int helper(int i,int j,int k,int n)
-{
-    vector<int> fib;
-    fib.push_back(i);
-    fib.push_back(j);
-    int count=2;
-    while(fib.back()<=k)
-    {
-        fib.push_back(fib[count-1]+fib[count-2]);
-        count++;
-    }
-    if(fib.back()==n)
-    {
-        return 1;
-    }
-    else if(fib.back()<n)
-    {
-        return 0;
-    }
-    else
-    {
-        return 2;
-    }
-}
 void solve()
 {
-    int n,k;
-    cin>>n>>k;
-  
-    if(k>=30)
-    {
-        cout<<0<<nline;
-        return ;
+    int n,a,q;
+    cin>>n>>a>>q;
+    string s;
+    cin>>s;
 
-    }
-    int ans=0;
-    for(int i=0;i<2e5;i++)
+    int curr=a;
+    for(int i=0;i<q;i++)
     {
-        int lo=i+1,hi=2e5;
-        while(lo<=hi)
+        if(s[i]=='+')
         {
-            int mid=hi-(hi-lo)/2;
-            if(helper(i,mid,k,n)==1)
-            {
-                ans++;
-                break;
-            }
-            else if(helper(i,mid,k,n)==0)
-            {
-                lo=mid+1;
-            }
-            else
-            {
-                hi=mid-1;
-            }
-
+            curr++;
         }
-
-
     }
-    cout<<ans<<nline;
-
-
+    if(curr<n)
+    {
+        no;
+        return;
+    }
+    int cnt0=0,cnt1=0;
+    int req=n-a;
+    bool flag=false;
+    for(int i=0;i<q;i++)
+    {
+        if(s[i]=='+' && !flag)
+        {
+            req--;
+        }
+        else if(s[i]=='-')
+        {
+            flag=true;
+            cnt0++;
+        }
+        else if(s[i]=='+' && flag)
+        {
+            cnt0--;
+        }
+        if(cnt0==0)
+        {
+            flag=false;
+        }
+        if(req==0)
+        {
+            yes;
+            return;
+        }
+    }
+    // int req=n-a;
+    cout<<"MAYBE"<<endl;
 
 }
 
@@ -121,7 +106,6 @@ int main()
     godspeed;
     ll t;
     cin >> t;
-   
 
     while (t--)
     {

@@ -50,70 +50,62 @@ typedef vector<vl> vvl;
     cin.tie(NULL);
 
 /* -----------------------------Code Begins from here-------------------------------------------*/
-int helper(int i,int j,int k,int n)
-{
-    vector<int> fib;
-    fib.push_back(i);
-    fib.push_back(j);
-    int count=2;
-    while(fib.back()<=k)
-    {
-        fib.push_back(fib[count-1]+fib[count-2]);
-        count++;
-    }
-    if(fib.back()==n)
-    {
-        return 1;
-    }
-    else if(fib.back()<n)
-    {
-        return 0;
-    }
-    else
-    {
-        return 2;
-    }
-}
 void solve()
 {
-    int n,k;
-    cin>>n>>k;
+    int n;
+    cin >> n;
+    vi v(n);
   
-    if(k>=30)
+    for (int i = 0; i < n; i++)
     {
-        cout<<0<<nline;
-        return ;
-
+        cin >> v[i];
+     
     }
-    int ans=0;
-    for(int i=0;i<2e5;i++)
+    vector<int> diff;
+
+    for (int i = 1; i < n; i++)
     {
-        int lo=i+1,hi=2e5;
-        while(lo<=hi)
+        if (v[i - 1] - v[i] != 0)
         {
-            int mid=hi-(hi-lo)/2;
-            if(helper(i,mid,k,n)==1)
-            {
-                ans++;
-                break;
-            }
-            else if(helper(i,mid,k,n)==0)
-            {
-                lo=mid+1;
-            }
-            else
-            {
-                hi=mid-1;
-            }
+            diff.push_back(v[i - 1] - v[i]);
+        }
+    }
+    diff.push_back(v[n - 1]);
+    vector<int> cont;
+    int count = 0;
+    int temp = v[0];
+    for(int i=0;i<n;i++)
+    {
+        if(temp==v[i])
+        {
+            count++;
 
         }
-
-
+        else{
+            cont.push_back(count);
+            count=1;
+            temp=v[i];
+        }
     }
-    cout<<ans<<nline;
+    cont.push_back(count);
+    reverse(all(cont));
+    bool flag = true;
+    // sort(all(cont));
+    // sort(all(diff));
+    for (int i = 0; i < cont.size(); i++)
+    {
+        if (cont[i] != diff[i])
+        {
+            flag = false;
+            break;
+        }
+    }
 
-
-
+    if (flag)
+    {
+        yes return;
+    }
+    no;
 }
 
 int main()
@@ -121,7 +113,6 @@ int main()
     godspeed;
     ll t;
     cin >> t;
-   
 
     while (t--)
     {

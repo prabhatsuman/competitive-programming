@@ -18,9 +18,7 @@ typedef vector<pi> vpi;
 typedef vector<pl> vpl;
 typedef vector<vi> vvi;
 typedef vector<vl> vvl;
-#define read(v)       \
-    for (auto &x : v) \
-        cin >> x;
+#define read(v) for(auto &x:v) cin>>x;
 #define printv(v)                      \
     for (int i = 0; i < v.size(); i++) \
         cout << v[i] << " ";
@@ -50,70 +48,106 @@ typedef vector<vl> vvl;
     cin.tie(NULL);
 
 /* -----------------------------Code Begins from here-------------------------------------------*/
-int helper(int i,int j,int k,int n)
+void solve()
 {
-    vector<int> fib;
-    fib.push_back(i);
-    fib.push_back(j);
-    int count=2;
-    while(fib.back()<=k)
+    int n,m;
+    cin>>n>>m;
+    vector<string> v(n);
+    for(int i=0;i<n;i++)
     {
-        fib.push_back(fib[count-1]+fib[count-2]);
-        count++;
+        cin>>v[i];
     }
-    if(fib.back()==n)
+    vector<vector<char>> ans(n,vector<char>(m,'.'));
+    vector<int> row(n,0),col(m,0);
+    for(int i=0;i<n;i++)
     {
-        return 1;
+        for(int j=0;j<m;j++)
+        {
+            if(v[i][j]=='L')
+            {
+                if(col[j]==0)
+                {
+                    ans[i][j]='B';
+                    col[j]=1;
+                }
+                else
+                {
+                    ans[i][j]='W';
+                    col[j]=0;
+                }
+            }
+            else if(v[i][j]=='R')
+            {
+                if(ans[i][j-1]=='B')
+                {
+                    ans[i][j]='W';
+                }
+                else
+                {
+                    ans[i][j]='B';
+                }
+            }
+            else if(v[i][j]=='U')
+            {
+                if(row[i]==0)
+                {
+                    ans[i][j]='B';
+                    row[i]=1;
+                }
+                else
+                {
+                    ans[i][j]='W';
+                    row[i]=0;
+                }
+            }
+            else if(v[i][j]=='D')
+            {
+                if(ans[i-1][j]=='B')
+                {
+                    ans[i][j]='W';
+                }
+                else
+                {
+                    ans[i][j]='B';
+                }
+            }
+        }
+        
     }
-    else if(fib.back()<n)
+    bool flag=true;
+    for(int i=0;i<n;i++)
     {
-        return 0;
+        if(row[i]==1)
+        {
+            flag=false;
+            break;
+        }
+
+    }
+    for(int i=0;i<m;i++)
+    {
+        if(col[i]==1)
+        {
+            flag=false;
+            break;
+        }
+    }
+    if(flag)
+    {
+        
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<m;j++)
+            {
+                cout<<ans[i][j];
+            }
+            cout<<nline;
+        }
     }
     else
     {
-        return 2;
+        cout<<-1<<nline;
     }
-}
-void solve()
-{
-    int n,k;
-    cin>>n>>k;
-  
-    if(k>=30)
-    {
-        cout<<0<<nline;
-        return ;
-
-    }
-    int ans=0;
-    for(int i=0;i<2e5;i++)
-    {
-        int lo=i+1,hi=2e5;
-        while(lo<=hi)
-        {
-            int mid=hi-(hi-lo)/2;
-            if(helper(i,mid,k,n)==1)
-            {
-                ans++;
-                break;
-            }
-            else if(helper(i,mid,k,n)==0)
-            {
-                lo=mid+1;
-            }
-            else
-            {
-                hi=mid-1;
-            }
-
-        }
-
-
-    }
-    cout<<ans<<nline;
-
-
-
 }
 
 int main()
@@ -121,7 +155,6 @@ int main()
     godspeed;
     ll t;
     cin >> t;
-   
 
     while (t--)
     {

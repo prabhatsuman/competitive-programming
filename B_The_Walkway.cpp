@@ -23,7 +23,8 @@ typedef vector<vl> vvl;
         cin >> x;
 #define printv(v)                      \
     for (int i = 0; i < v.size(); i++) \
-        cout << v[i] << " ";
+        cout << v[i] << " ";           \
+    cout << endl;
 #define print2d(v)                            \
     for (int i = 0; i < v.size(); i++)        \
     {                                         \
@@ -50,70 +51,57 @@ typedef vector<vl> vvl;
     cin.tie(NULL);
 
 /* -----------------------------Code Begins from here-------------------------------------------*/
-int helper(int i,int j,int k,int n)
-{
-    vector<int> fib;
-    fib.push_back(i);
-    fib.push_back(j);
-    int count=2;
-    while(fib.back()<=k)
-    {
-        fib.push_back(fib[count-1]+fib[count-2]);
-        count++;
-    }
-    if(fib.back()==n)
-    {
-        return 1;
-    }
-    else if(fib.back()<n)
-    {
-        return 0;
-    }
-    else
-    {
-        return 2;
-    }
-}
 void solve()
 {
-    int n,k;
-    cin>>n>>k;
-  
-    if(k>=30)
+    int n, m, d;
+    cin >> n >> m >> d;
+    set<int> st;
+    st.insert(1);
+    st.insert(n+1);
+    bool flag=false;
+    for(int i=0;i<m;i++)
     {
-        cout<<0<<nline;
-        return ;
-
-    }
-    int ans=0;
-    for(int i=0;i<2e5;i++)
-    {
-        int lo=i+1,hi=2e5;
-        while(lo<=hi)
+        int x;
+        cin>>x;
+        if(x==1)
         {
-            int mid=hi-(hi-lo)/2;
-            if(helper(i,mid,k,n)==1)
-            {
-                ans++;
-                break;
-            }
-            else if(helper(i,mid,k,n)==0)
-            {
-                lo=mid+1;
-            }
-            else
-            {
-                hi=mid-1;
-            }
+            flag=true;
+        }
+        st.insert(x);
+    }
+    vi v;
+    for(auto x:st)
+    {
+        v.pb(x);
+    }
+    n=v.size();
+    vi pre(n,1);
+   
+ 
+    for(int i=1;i<n;i++)
+    {
+        pre[i]+=(v[i]-v[i-1]-1)/d+pre[i-1];
+    }
+    int ans=1e9;
+    int total=pre[n-1]-1; 
+    int count=0;
+    
+    for(int i=1;i<n-1;i++)
+    {
+        if(ans>total-(pre[i+1]-pre[i-1]-1)+(v[i+1]-v[i-1]-1)/d)
+        {
+            count=1;
+            ans=total-(pre[i+1]-pre[i-1]-1)+(v[i+1]-v[i-1]-1)/d;
 
         }
-
-
-    }
-    cout<<ans<<nline;
-
-
-
+   
+        else if(ans==total-(pre[i+1]-pre[i-1]-1)+(v[i+1]-v[i-1]-1)/d)
+        {
+            count++;
+        }
+    }  
+    if(total==ans && flag)count++;
+    cout<<ans<<" "<<count<<nline;
 }
 
 int main()
@@ -121,7 +109,6 @@ int main()
     godspeed;
     ll t;
     cin >> t;
-   
 
     while (t--)
     {

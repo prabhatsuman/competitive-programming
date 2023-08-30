@@ -18,9 +18,7 @@ typedef vector<pi> vpi;
 typedef vector<pl> vpl;
 typedef vector<vi> vvi;
 typedef vector<vl> vvl;
-#define read(v)       \
-    for (auto &x : v) \
-        cin >> x;
+#define read(v) for(auto &x:v) cin>>x;
 #define printv(v)                      \
     for (int i = 0; i < v.size(); i++) \
         cout << v[i] << " ";
@@ -50,69 +48,33 @@ typedef vector<vl> vvl;
     cin.tie(NULL);
 
 /* -----------------------------Code Begins from here-------------------------------------------*/
-int helper(int i,int j,int k,int n)
-{
-    vector<int> fib;
-    fib.push_back(i);
-    fib.push_back(j);
-    int count=2;
-    while(fib.back()<=k)
-    {
-        fib.push_back(fib[count-1]+fib[count-2]);
-        count++;
-    }
-    if(fib.back()==n)
-    {
-        return 1;
-    }
-    else if(fib.back()<n)
-    {
-        return 0;
-    }
-    else
-    {
-        return 2;
-    }
-}
 void solve()
 {
-    int n,k;
-    cin>>n>>k;
-  
-    if(k>=30)
-    {
-        cout<<0<<nline;
-        return ;
-
-    }
+    int n,k,a1,a2;
+    cin>>n>>k>>a1>>a2;
+    int lo=0,hi=1e8;
     int ans=0;
-    for(int i=0;i<2e5;i++)
+    while(lo<hi)
     {
-        int lo=i+1,hi=2e5;
-        while(lo<=hi)
+        int mid=hi-(hi-lo)/2;
+        int temp=n/mid;
+        int rem=(temp*mid)%mid;
+        cout<<mid<<" "<<lo<<" "<<hi<<nline;
+        rem-=a2*k;
+        rem-=a1;
+        if(rem<=0)
         {
-            int mid=hi-(hi-lo)/2;
-            if(helper(i,mid,k,n)==1)
-            {
-                ans++;
-                break;
-            }
-            else if(helper(i,mid,k,n)==0)
-            {
-                lo=mid+1;
-            }
-            else
-            {
-                hi=mid-1;
-            }
-
+            ans=mid;
+            hi=mid-1;
         }
-
-
+        else
+        {
+            lo=mid+1;
+        }
     }
     cout<<ans<<nline;
 
-
+    
 
 }
 
@@ -121,7 +83,6 @@ int main()
     godspeed;
     ll t;
     cin >> t;
-   
 
     while (t--)
     {

@@ -50,70 +50,90 @@ typedef vector<vl> vvl;
     cin.tie(NULL);
 
 /* -----------------------------Code Begins from here-------------------------------------------*/
-int helper(int i,int j,int k,int n)
+
+void solve()
 {
-    vector<int> fib;
-    fib.push_back(i);
-    fib.push_back(j);
-    int count=2;
-    while(fib.back()<=k)
+    string s;
+    cin >> s;
+    int n = s.length();
+    int ind = -1;
+    for (int i = 0; i < n; i++)
     {
-        fib.push_back(fib[count-1]+fib[count-2]);
-        count++;
+        if (s[i] >= '5')
+        {
+            // s[i]='0';
+            ind = i;
+            break;
+        }
     }
-    if(fib.back()==n)
+    if (ind == 0)
     {
-        return 1;
-    }
-    else if(fib.back()<n)
-    {
-        return 0;
+        string res = "1";
+        for (int i = 0; i < n; i++)
+        {
+            res += '0';
+        }
+        cout << res << nline;
     }
     else
     {
-        return 2;
-    }
-}
-void solve()
-{
-    int n,k;
-    cin>>n>>k;
-  
-    if(k>=30)
-    {
-        cout<<0<<nline;
-        return ;
-
-    }
-    int ans=0;
-    for(int i=0;i<2e5;i++)
-    {
-        int lo=i+1,hi=2e5;
-        while(lo<=hi)
+        if (ind == -1)
         {
-            int mid=hi-(hi-lo)/2;
-            if(helper(i,mid,k,n)==1)
+            cout << s << nline;
+        }
+        else
+        {
+            string res = "";
+            for (int i = 0; i < ind - 1; i++)
             {
-                ans++;
-                break;
+                res += s[i];
             }
-            else if(helper(i,mid,k,n)==0)
-            {
-                lo=mid+1;
-            }
+            // cout<<res<<nline;
+
+            if (s[ind - 1] != '4')
+                res += ++s[ind - 1];
             else
             {
-                hi=mid-1;
+                res += '0';
             }
 
+            int j = ind - 2;
+            bool flag = false;
+            if (s[j + 1] == '4')
+            {
+
+                while (j >= 0 && s[j] == '4')
+                {
+                    flag = true;
+                    res[j] = '0';
+                    j--;
+                }
+            }
+
+            if (flag)
+            {
+
+                if (j == -1)
+                {
+                    res = "1" + res;
+                }
+                else
+                {
+                    res[j]++;
+                }
+            }
+            // cout<<j<<nline;
+            // cout<<ind<<nline;
+            // cout<<n
+            //   res+='0';
+            for (int j = ind; j < n; j++)
+            {
+                res += '0';
+            }
+
+            cout << res << nline;
         }
-
-
     }
-    cout<<ans<<nline;
-
-
-
 }
 
 int main()
@@ -121,7 +141,6 @@ int main()
     godspeed;
     ll t;
     cin >> t;
-   
 
     while (t--)
     {

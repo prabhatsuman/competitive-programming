@@ -50,70 +50,45 @@ typedef vector<vl> vvl;
     cin.tie(NULL);
 
 /* -----------------------------Code Begins from here-------------------------------------------*/
-int helper(int i,int j,int k,int n)
-{
-    vector<int> fib;
-    fib.push_back(i);
-    fib.push_back(j);
-    int count=2;
-    while(fib.back()<=k)
-    {
-        fib.push_back(fib[count-1]+fib[count-2]);
-        count++;
-    }
-    if(fib.back()==n)
-    {
-        return 1;
-    }
-    else if(fib.back()<n)
-    {
-        return 0;
-    }
-    else
-    {
-        return 2;
-    }
-}
 void solve()
 {
-    int n,k;
-    cin>>n>>k;
-  
-    if(k>=30)
+    int n;
+    cin >> n;
+    vector<vector<int>> v(n);
+    int ans=1e9;
+    for (int i = 0; i < n; i++)
     {
-        cout<<0<<nline;
-        return ;
-
-    }
-    int ans=0;
-    for(int i=0;i<2e5;i++)
-    {
-        int lo=i+1,hi=2e5;
-        while(lo<=hi)
+        int m;
+        cin >> m;
+        for (int j = 0; j < m; j++)
         {
-            int mid=hi-(hi-lo)/2;
-            if(helper(i,mid,k,n)==1)
-            {
-                ans++;
-                break;
-            }
-            else if(helper(i,mid,k,n)==0)
-            {
-                lo=mid+1;
-            }
-            else
-            {
-                hi=mid-1;
-            }
-
+            int x;
+            cin >> x;
+            v[i].pb(x);
         }
-
-
+        sort(all(v[i]));
+        ans=min(ans,v[i][0]);
+       
     }
-    cout<<ans<<nline;
-
-
-
+    
+    vector<int> temp;
+    for (int i = 0; i < n; i++)
+    {
+        temp.push_back(v[i][1]);
+    }
+    if(temp.size()==1)
+    {
+        cout<<ans<<nline;
+        return;
+    }
+    sort(all(temp));
+    ll sum=ans;
+    for(int i=1;i<temp.size();i++)
+    {
+        sum+=temp[i];
+    }
+    cout<<sum<<nline;
+    
 }
 
 int main()
@@ -121,7 +96,6 @@ int main()
     godspeed;
     ll t;
     cin >> t;
-   
 
     while (t--)
     {

@@ -18,9 +18,7 @@ typedef vector<pi> vpi;
 typedef vector<pl> vpl;
 typedef vector<vi> vvi;
 typedef vector<vl> vvl;
-#define read(v)       \
-    for (auto &x : v) \
-        cin >> x;
+#define read(v) for(auto &x:v) cin>>x;
 #define printv(v)                      \
     for (int i = 0; i < v.size(); i++) \
         cout << v[i] << " ";
@@ -50,78 +48,45 @@ typedef vector<vl> vvl;
     cin.tie(NULL);
 
 /* -----------------------------Code Begins from here-------------------------------------------*/
-int helper(int i,int j,int k,int n)
+int dfs(vector<int> adj[],int node,vector<bool> &vis)
 {
-    vector<int> fib;
-    fib.push_back(i);
-    fib.push_back(j);
-    int count=2;
-    while(fib.back()<=k)
+    int ans=0;
+    for(auto it:adj[node])
     {
-        fib.push_back(fib[count-1]+fib[count-2]);
-        count++;
+        if(vis[it])continue;
+        vis[it]=true;
+        ans+=dfs(adj,it,vis)+1;
     }
-    if(fib.back()==n)
-    {
-        return 1;
-    }
-    else if(fib.back()<n)
-    {
-        return 0;
-    }
-    else
-    {
-        return 2;
-    }
+    return ans;
 }
 void solve()
 {
-    int n,k;
-    cin>>n>>k;
-  
-    if(k>=30)
+    int n,m;
+    cin>>n>>m;
+    vector<int> adj[n+1];
+    for(int i=0;i<m;i++)
     {
-        cout<<0<<nline;
-        return ;
-
+        int a,b;
+        cin>>a>>b;
+        adj[a].push_back(b);
     }
-    int ans=0;
-    for(int i=0;i<2e5;i++)
+
+    for(int i=1;i<=n;i++)
     {
-        int lo=i+1,hi=2e5;
-        while(lo<=hi)
+        vector<bool> vis(n,false);
+        if(dfs(adj,i,vis)==n-1)
         {
-            int mid=hi-(hi-lo)/2;
-            if(helper(i,mid,k,n)==1)
-            {
-                ans++;
-                break;
-            }
-            else if(helper(i,mid,k,n)==0)
-            {
-                lo=mid+1;
-            }
-            else
-            {
-                hi=mid-1;
-            }
-
+            cout<<i<<nline;
+            return;
         }
-
-
     }
-    cout<<ans<<nline;
-
-
-
+    cout<<-1<<nline;
 }
 
 int main()
 {
     godspeed;
-    ll t;
-    cin >> t;
-   
+    ll t=1;
 
     while (t--)
     {

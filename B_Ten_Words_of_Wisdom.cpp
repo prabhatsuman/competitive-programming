@@ -59,7 +59,7 @@ void solve()
     {
         int a,b;
         cin>>a>>b;
-        if(a<10)
+        if(a<=10)
         {
            if(ans<b)
            {

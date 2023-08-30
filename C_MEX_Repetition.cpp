@@ -18,9 +18,7 @@ typedef vector<pi> vpi;
 typedef vector<pl> vpl;
 typedef vector<vi> vvi;
 typedef vector<vl> vvl;
-#define read(v)       \
-    for (auto &x : v) \
-        cin >> x;
+#define read(v) for(auto &x:v) cin>>x;
 #define printv(v)                      \
     for (int i = 0; i < v.size(); i++) \
         cout << v[i] << " ";
@@ -50,70 +48,48 @@ typedef vector<vl> vvl;
     cin.tie(NULL);
 
 /* -----------------------------Code Begins from here-------------------------------------------*/
-int helper(int i,int j,int k,int n)
+int mex(vi &v)
 {
-    vector<int> fib;
-    fib.push_back(i);
-    fib.push_back(j);
-    int count=2;
-    while(fib.back()<=k)
+    set<int> st(all(v));
+    int rem=0;
+    while(st.find(rem)!=st.end())
     {
-        fib.push_back(fib[count-1]+fib[count-2]);
-        count++;
+        rem++;
     }
-    if(fib.back()==n)
-    {
-        return 1;
-    }
-    else if(fib.back()<n)
-    {
-        return 0;
-    }
-    else
-    {
-        return 2;
-    }
+    return rem;
 }
 void solve()
 {
     int n,k;
     cin>>n>>k;
-  
-    if(k>=30)
+    vi v;
+    for(int i=0;i<n;i++)
     {
-        cout<<0<<nline;
-        return ;
-
+        int x;
+        cin>>x;
+        v.pb(x);
     }
-    int ans=0;
-    for(int i=0;i<2e5;i++)
+    v.pb(mex(v));
+    // printv(v);
+    // cout<<endl;
+    n=v.size();
+    vi temp=v;
+    for(int i=0;i<temp.size();i++)
     {
-        int lo=i+1,hi=2e5;
-        while(lo<=hi)
-        {
-            int mid=hi-(hi-lo)/2;
-            if(helper(i,mid,k,n)==1)
-            {
-                ans++;
-                break;
-            }
-            else if(helper(i,mid,k,n)==0)
-            {
-                lo=mid+1;
-            }
-            else
-            {
-                hi=mid-1;
-            }
-
-        }
-
-
+        v.pb(temp[i]);
     }
-    cout<<ans<<nline;
-
-
-
+    int rem=k%(n);
+    // cout<<rem<<endl;
+    int j=n-rem;
+    // cout<<j<<endl;
+    int i=0;
+    while(i<n-1)
+    {
+        cout<<v[j]<<" ";
+        i++;
+        j++;
+    }
+    cout<<nline;
 }
 
 int main()
@@ -121,7 +97,6 @@ int main()
     godspeed;
     ll t;
     cin >> t;
-   
 
     while (t--)
     {
